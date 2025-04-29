@@ -1,0 +1,42 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+from scipy import stats
+
+# Read both CSVs
+tsla = pd.read_csv('/Users/jessica/Downloads/TSLA.csv')
+aapl = pd.read_csv('/Users/jessica/Downloads/AAPL.csv')
+
+# Make sure they’re the same length (trim to shorter one)
+min_len = min(len(tsla), len(aapl))
+tsla = tsla[:min_len]
+aapl = aapl[:min_len]
+
+# Get the 'Close' column
+tsla['Close'] = pd.to_numeric(tsla['Close'], errors='coerce')
+aapl['Close'] = pd.to_numeric(aapl['Close'], errors='coerce')
+
+# Drop rows where either Close is NaN (clean data)
+combined = pd.DataFrame({
+    'TSLA': tsla['Close'],
+    'AAPL': aapl['Close']
+}).dropna()
+
+# Extract cleaned x and y
+x = combined['TSLA']
+y = combined['AAPL']
+
+# Linear regression
+slope, intercept, r, p, std_err = stats.linregress(x, y)
+model = slope * x + intercept
+
+# Plot
+plt.scatter(x, y)
+plt.plot(x, model, color='red', label='Regression Line')
+plt.xlabel('TSLA Close Price')
+plt.ylabel('AAPL Close Price')
+plt.title("TSLA vs AAPL Closing Prices")
+plt.legend()
+plt.show()
+
+# r-value
+print(r)
