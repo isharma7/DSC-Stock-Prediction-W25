@@ -1,6 +1,8 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 from scipy import stats
+from sklearn.model_selection import train_test_split
+
 
 # Read both CSVs
 tsla = pd.read_csv('/Users/jessica/Downloads/TSLA.csv')
@@ -22,19 +24,27 @@ combined = pd.DataFrame({
 }).dropna()
 
 # Extract cleaned x and y
-x = combined['TSLA']
-y = combined['AAPL']
+x = combined['TSLA'].values.reshape(-1, 1)
+y = combined['AAPL'].values
 
-# Linear regression
-slope, intercept, r, p, std_err = stats.linregress(x, y)
-model = slope * x + intercept
+# Train-test split (80/20)
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.2)
+
+# Linear regression using scipy
+x_train_flat = x_train.flatten()
+y_train_flat = y_train
+
+slope, intercept, r, p, error = stats.linregress(x_train_flat, y_train_flat)
+
+# Predict on test set
+y_predict = slope * x_test + intercept
 
 # Plot
-plt.scatter(x, y)
-plt.plot(x, model, color='red', label='Regression Line')
+plt.scatter(x_test, y_test)
+plt.plot(x_test, y_predict, color='red', label='Regression Line')
 plt.xlabel('TSLA Close Price')
 plt.ylabel('AAPL Close Price')
-plt.title("TSLA vs AAPL Closing Prices")
+plt.title("TSLA vs AAPL Closing Prices (Test Set)")
 plt.legend()
 plt.show()
 
