@@ -29,8 +29,8 @@ df['Volume_lag'] = df['Volume'].shift(1)
 df.dropna(inplace=True)
 
 #parameters and target
-x = df[['Open']] 
-y = df['Close'] #Close
+x = df[['Open', 'High', 'Low', 'Volume', 'MA_30', 'MA_7', 'Close_lag', 'Volume_lag']] 
+y = df['Close'] 
 
 #test vs training data
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.2, random_state = 100)
