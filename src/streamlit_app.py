@@ -15,3 +15,5 @@ col1, col2, col3 = st.columns(3)
 col1.metric("MAE", f"{mae:.2f}")
 col2.metric("MSE", f"{mse:.2f}")
 col3.metric("R^2", f"{r2:.2f}")
+
+print("Streamlit UI Loaded")
