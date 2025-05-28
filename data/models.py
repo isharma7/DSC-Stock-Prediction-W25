@@ -4,6 +4,8 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
+#fitting ARIMA and Linear Regression models for time series forecasting
+# This module provides functions to fit ARIMA and Linear Regression models for time series forecasting.
 def fit_arima(train: pd.Series, test: pd.Series, order=(5, 1, 0)) -> np.ndarray:
     model = ARIMA(train, order=order)
     model_fit = model.fit()
@@ -19,7 +21,7 @@ def fit_linear_model(train: pd.Series, test: pd.Series) -> np.ndarray:
     model.fit(X_train, y_train)
     predictions = model.predict(X_test)
     return predictions
-
+#  This function evaluates the performance of the model predictions against the true values.
 def evaluate(true, pred):
     return {
         "MAE": mean_absolute_error(true, pred),
