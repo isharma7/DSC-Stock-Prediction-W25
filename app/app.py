@@ -31,12 +31,43 @@
 # - Plot the actual prices and overlay the linear forecast
 # - Print out the 5 predicted price values in the app
 
-
-
-
-
 #(Optional Bonus Tasks):
 # - Let users change the number of forecast days with a slider
 # - Display model evaluation metrics (e.g., MAE, MSE)
 # - Allow user to upload their own CSV file
 # - Organize sections with st.columns() or st.expander() for better layout
+
+# title
+st.title("Stock Price Forecasting")
+st.write("Use ARIMA or Linear Regression to forecast the stock price!")
+
+# packages
+import streamlit as st
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+from sklearn.model_selection import train_test_split
+import random # for dummy data
+
+# dummy data
+predictions = random.sample(range(0, 100), 50)
+actual = random.sample(range(0, 100), 50)
+date = range(0,100,2)
+
+# user input
+stock = "AAPL"
+model_type = "Linear Regression"
+
+# create plot
+fig, ax = plt.subplots() # figure and axes
+ax.plot(date, predictions, label="Predicted", linestyle="dashed")
+ax.plot(date, actual, label = "Actual")
+ax.legend()
+ax.set_title(f"Forecasted Closing Price for {stock} ({model_type})")
+ax.set_xlabel("Date")
+ax.set_ylabel("Closing Price")
+ax.grid(True)
+
+# display plot
+st.pyplot(fig)

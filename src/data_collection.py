@@ -18,4 +18,3 @@ def download_stock(tickers=["AAPL", "TSLA", "SPY"], start="2020-01-01", end="202
 
 if __name__ == "__main__":
     download_stock(["AAPL", "TSLA", "SPY"])
-
